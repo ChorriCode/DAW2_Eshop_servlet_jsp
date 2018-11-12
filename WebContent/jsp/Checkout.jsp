@@ -15,7 +15,7 @@
 <%
   @SuppressWarnings("unchecked")
   Hashtable<String, CartItem> shoppingCart =
-      (Hashtable<String, CartItem>)session.getAttribute("shoppingCart");
+      (Hashtable<String, CartItem>)session.getAttribute("carrito");
   if (shoppingCart != null && !shoppingCart.isEmpty()) {
   %>
     <form action="">

@@ -45,7 +45,7 @@ public class ShopServlet extends javax.servlet.http.HttpServlet implements javax
 
 	protected void addItem(HttpServletRequest request, DataManager dm) {
 		HttpSession session = request.getSession(true);
-		Hashtable<String, CartItem> shoppingCart = (Hashtable<String, CartItem>) session.getAttribute("shoppingCart");
+		Hashtable<String, CartItem> shoppingCart = (Hashtable<String, CartItem>) session.getAttribute("carrito");
 		if (shoppingCart == null) {
 			shoppingCart = new Hashtable<String, CartItem>(10);
 		}
@@ -58,7 +58,7 @@ public class ShopServlet extends javax.servlet.http.HttpServlet implements javax
 					CartItem item = new CartItem(book, 1);
 					shoppingCart.remove(bookId);
 					shoppingCart.put(bookId, item);
-					session.setAttribute("shoppingCart", shoppingCart);
+					session.setAttribute("carrito", shoppingCart);
 				}
 			} catch (Exception e) {
 				System.out.println("Error adding the selected book to the shopping cart!");
@@ -66,12 +66,38 @@ public class ShopServlet extends javax.servlet.http.HttpServlet implements javax
 		}
 	}
 
-	protected void updateItem() {
-
+	protected void updateItem(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		Hashtable<String, CartItem> shoppingCart = (Hashtable<String, CartItem>) session.getAttribute("carrito");
+		String action = request.getParameter("action");
+		if (action != null && action.equals("updateItem")) {
+		    try {
+		      String bookId = request.getParameter("bookId");
+		      String quantity = request.getParameter("quantity");
+		      CartItem item = shoppingCart.get(bookId);
+		      if (item != null) {
+		        item.setQuantity(quantity);
+		        }
+		      }
+		    catch (Exception e) {
+		      System.out.println("Error updating shopping cart!");
+		      }
+		    }
 	}
 
-	protected void deleteItem() {
-
+	protected void deleteItem(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		Hashtable<String, CartItem> shoppingCart = (Hashtable<String, CartItem>) session.getAttribute("carrito");
+		String action = request.getParameter("action");
+		if (action != null && action.equals("deleteItem")) {
+		    try {
+		      String bookId = request.getParameter("bookId");
+		      shoppingCart.remove(bookId);
+		      }
+		    catch (Exception e) {
+		      System.out.println("Error deleting the selected item from the shopping cart!");
+		      }
+		    }
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -86,6 +112,7 @@ public class ShopServlet extends javax.servlet.http.HttpServlet implements javax
 		String action = request.getParameter("action");
 		// recuperar  datamanager del contexto
 		DataManager datamanager = (DataManager) request.getServletContext().getAttribute("dataManager");
+		
 		if (action != null) {
 			switch (action) {
 			case "search":
@@ -104,20 +131,19 @@ public class ShopServlet extends javax.servlet.http.HttpServlet implements javax
 			case "orderConfirmation":
 				url = base + "OrderConfirmation.jsp";
 				break;
-			case "showCartaddItem":
+			case "addItem":
 				addItem(request, datamanager);
 				url = base + "ShoppingCart.jsp";
 
 				break;
-			case "showCartupdateItem":
-				updateItem();
+			case "updateItem":
+				updateItem(request);
 				url = base + "ShoppingCart.jsp";
 
 				break;
-			case "showCartdeleteItem":
-				deleteItem();
+			case "deleteItem":
+				deleteItem(request);
 				url = base + "ShoppingCart.jsp";
-
 				break;
 			case "showCart":
 				System.out.println("showCart");
@@ -127,6 +153,7 @@ public class ShopServlet extends javax.servlet.http.HttpServlet implements javax
 
 			}
 		}
+		System.out.println(url);
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(url);
 		requestDispatcher.forward(request, response);
 	}

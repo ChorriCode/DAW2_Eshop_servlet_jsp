@@ -37,7 +37,7 @@
         <tr>
           <td colspan="2" align="right">
             <a class="link1"
-              href="<%=base%>?action=&bookId=<%=book.getId()%>">
+              href="<%=base%>?action=addItem&bookId=<%=book.getId()%>">
               Add To Cart</a>
             </td>
           </tr>

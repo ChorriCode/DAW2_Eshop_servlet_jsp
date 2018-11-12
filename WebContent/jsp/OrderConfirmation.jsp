@@ -19,7 +19,7 @@
 <%
     @SuppressWarnings("unchecked")
     Hashtable<String, CartItem> cart =
-        (Hashtable<String, CartItem>)session.getAttribute("shoppingCart");
+        (Hashtable<String, CartItem>)session.getAttribute("carrito");
     long orderId = dataManager.insertOrder(customer, cart);
     if (orderId > 0L) {
       session.invalidate();

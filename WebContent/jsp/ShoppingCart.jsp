@@ -6,10 +6,12 @@
 <jsp:useBean id="dataManager" scope="application"
   class="eshop.model.DataManager"/>
 <%
+
   String base = (String) application.getAttribute("base");
   @SuppressWarnings("unchecked")
    Hashtable<String, CartItem> shoppingCart =
-      (Hashtable<String, CartItem>)session.getAttribute("shoppingCart");
+      (Hashtable<String, CartItem>)session.getAttribute("carrito");
+ /*/
   if (shoppingCart == null) {
     shoppingCart = new Hashtable<String, CartItem>(10);
     }
@@ -22,35 +24,15 @@
         CartItem item = new CartItem(book, 1);
         shoppingCart.remove(bookId);
         shoppingCart.put(bookId, item);
-        session.setAttribute("shoppingCart", shoppingCart);
+        session.setAttribute("carrito", shoppingCart);
         }
       }
     catch (Exception e) {
       out.println("Error adding the selected book to the shopping cart!");
       }
     } 
-  if (action != null && action.equals("updateItem")) {
-    try {
-      String bookId = request.getParameter("bookId");
-      String quantity = request.getParameter("quantity");
-      CartItem item = shoppingCart.get(bookId);
-      if (item != null) {
-        item.setQuantity(quantity);
-        }
-      }
-    catch (Exception e) {
-      out.println("Error updating shopping cart!");
-      }
-    }
-  if (action != null && action.equals("deleteItem")) {
-    try {
-      String bookId = request.getParameter("bookId");
-      shoppingCart.remove(bookId);
-      }
-    catch (Exception e) {
-      out.println("Error deleting the selected item from the shopping cart!");
-      }
-    }
+  
+  */
   %>
 <html>
 <head>
