@@ -44,6 +44,7 @@
 <jsp:include page="TopMenu.jsp" flush="true"/>
 <jsp:include page="LeftMenu.jsp" flush="true"/>
 <%
+  try {
   if (!shoppingCart.isEmpty()) {
   %>
     <div class="content">
@@ -106,9 +107,9 @@
       </div>
 <%
     }
-  else {
+  } catch(NullPointerException e) {
     %><p class="info">The Shopping cart is empty.</p><%
-    }
+  }
   %>
 </body>
 </html>

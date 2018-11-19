@@ -32,7 +32,7 @@ public class CategoryPeer {
         System.out.println("Could not get categories: " + e.getMessage());
         }
       finally {
-        dataManager.putConnection(connection);
+        dataManager.closeConnection(connection);
         }
       }
     return category;
@@ -61,7 +61,7 @@ public class CategoryPeer {
         System.out.println("Could not get categories: " + e.getMessage());
         }
       finally {
-        dataManager.putConnection(connection);
+        dataManager.closeConnection(connection);
         }
       }
     return categories;

@@ -50,7 +50,7 @@ public class DataManager {
       }
     return conn;
     }
-  public void putConnection(Connection conn) {
+  public void closeConnection(Connection conn) {
     if (conn != null) {
       try { conn.close(); }
       catch (SQLException e) { }
@@ -117,7 +117,7 @@ public class DataManager {
           try { stmt.close(); }
           catch (SQLException e) { }
           }
-        putConnection(connection);
+        closeConnection(connection);
         }
       }
     return returnValue;

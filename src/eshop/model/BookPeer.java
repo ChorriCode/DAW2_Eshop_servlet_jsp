@@ -39,7 +39,7 @@ public class BookPeer {
         System.out.println("Could not search for books:" + e.getMessage());
         }
       finally {
-        dataManager.putConnection(connection);
+        dataManager.closeConnection(connection);
         }
       }
     return books;
@@ -74,7 +74,7 @@ public class BookPeer {
         System.out.println("Could not get books: " + e.getMessage());
         }
       finally {
-        dataManager.putConnection(connection);
+        dataManager.closeConnection(connection);
         }
       }
     return books;
@@ -104,7 +104,7 @@ public class BookPeer {
         System.out.println("Could not get book: " + e.getMessage());
         }
       finally {
-        dataManager.putConnection(connection);
+        dataManager.closeConnection(connection);
         }
       }
     return book;
